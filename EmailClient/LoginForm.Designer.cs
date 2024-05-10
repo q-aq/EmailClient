@@ -61,7 +61,7 @@
             textBox2.PasswordChar = '*';
             textBox2.Size = new Size(324, 38);
             textBox2.TabIndex = 2;
-            textBox2.Text = "NGIVHQLOCSGASMMO";
+            textBox2.Text = "";
             // 
             // label1
             // 
