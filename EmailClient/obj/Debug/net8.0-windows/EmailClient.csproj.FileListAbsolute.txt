@@ -1,0 +1,52 @@
+F:\text.c\c#\EmailClient\EmailClient\bin\Debug\net8.0-windows\EmailClient.exe
+F:\text.c\c#\EmailClient\EmailClient\bin\Debug\net8.0-windows\EmailClient.deps.json
+F:\text.c\c#\EmailClient\EmailClient\bin\Debug\net8.0-windows\EmailClient.runtimeconfig.json
+F:\text.c\c#\EmailClient\EmailClient\bin\Debug\net8.0-windows\EmailClient.dll
+F:\text.c\c#\EmailClient\EmailClient\bin\Debug\net8.0-windows\EmailClient.pdb
+F:\text.c\c#\EmailClient\EmailClient\obj\Debug\net8.0-windows\EmailClient.LoginForm.resources
+F:\text.c\c#\EmailClient\EmailClient\obj\Debug\net8.0-windows\EmailClient.csproj.GenerateResource.cache
+F:\text.c\c#\EmailClient\EmailClient\obj\Debug\net8.0-windows\EmailClient.GeneratedMSBuildEditorConfig.editorconfig
+F:\text.c\c#\EmailClient\EmailClient\obj\Debug\net8.0-windows\EmailClient.AssemblyInfoInputs.cache
+F:\text.c\c#\EmailClient\EmailClient\obj\Debug\net8.0-windows\EmailClient.AssemblyInfo.cs
+F:\text.c\c#\EmailClient\EmailClient\obj\Debug\net8.0-windows\EmailClient.csproj.CoreCompileInputs.cache
+F:\text.c\c#\EmailClient\EmailClient\obj\Debug\net8.0-windows\EmailClient.dll
+F:\text.c\c#\EmailClient\EmailClient\obj\Debug\net8.0-windows\refint\EmailClient.dll
+F:\text.c\c#\EmailClient\EmailClient\obj\Debug\net8.0-windows\EmailClient.pdb
+F:\text.c\c#\EmailClient\EmailClient\obj\Debug\net8.0-windows\EmailClient.genruntimeconfig.cache
+F:\text.c\c#\EmailClient\EmailClient\obj\Debug\net8.0-windows\ref\EmailClient.dll
+F:\text.c\c#\EmailClient\EmailClient\obj\Debug\net8.0-windows\EmailClient.MainForm.resources
+F:\text.c\c#\EmailClient\EmailClient\obj\Debug\net8.0-windows\EmailClient.Forms.resources
+F:\text.c\c#\EmailClient\EmailClient\bin\Debug\net8.0-windows\BouncyCastle.Cryptography.dll
+F:\text.c\c#\EmailClient\EmailClient\bin\Debug\net8.0-windows\MailKit.dll
+F:\text.c\c#\EmailClient\EmailClient\bin\Debug\net8.0-windows\MimeKit.dll
+F:\text.c\c#\EmailClient\EmailClient\bin\Debug\net8.0-windows\System.Security.Cryptography.Pkcs.dll
+F:\text.c\c#\EmailClient\EmailClient\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+F:\text.c\c#\EmailClient\EmailClient\obj\Debug\net8.0-windows\EmailClient.csproj.AssemblyReference.cache
+F:\text.c\c#\EmailClient\EmailClient\obj\Debug\net8.0-windows\EmailCli.6855ED27.Up2Date
+F:\text.c\c#\EmailClient\EmailClient\obj\Debug\net8.0-windows\EmailClient.Properties.Resources.resources
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailClient\bin\Debug\net8.0-windows\EmailClient.exe
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailClient\bin\Debug\net8.0-windows\EmailClient.deps.json
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailClient\bin\Debug\net8.0-windows\EmailClient.runtimeconfig.json
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailClient\bin\Debug\net8.0-windows\EmailClient.dll
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailClient\bin\Debug\net8.0-windows\EmailClient.pdb
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailClient\bin\Debug\net8.0-windows\BouncyCastle.Cryptography.dll
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailClient\bin\Debug\net8.0-windows\MailKit.dll
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailClient\bin\Debug\net8.0-windows\MimeKit.dll
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailClient\bin\Debug\net8.0-windows\System.Security.Cryptography.Pkcs.dll
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailClient\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailClient\obj\Debug\net8.0-windows\EmailClient.csproj.AssemblyReference.cache
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailClient\obj\Debug\net8.0-windows\EmailClient.Forms.resources
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailClient\obj\Debug\net8.0-windows\EmailClient.LoginForm.resources
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailClient\obj\Debug\net8.0-windows\EmailClient.MainForm.resources
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailClient\obj\Debug\net8.0-windows\EmailClient.Properties.Resources.resources
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailClient\obj\Debug\net8.0-windows\EmailClient.csproj.GenerateResource.cache
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailClient\obj\Debug\net8.0-windows\EmailClient.GeneratedMSBuildEditorConfig.editorconfig
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailClient\obj\Debug\net8.0-windows\EmailClient.AssemblyInfoInputs.cache
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailClient\obj\Debug\net8.0-windows\EmailClient.AssemblyInfo.cs
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailClient\obj\Debug\net8.0-windows\EmailClient.csproj.CoreCompileInputs.cache
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailClient\obj\Debug\net8.0-windows\EmailCli.6855ED27.Up2Date
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailClient\obj\Debug\net8.0-windows\EmailClient.dll
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailClient\obj\Debug\net8.0-windows\refint\EmailClient.dll
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailClient\obj\Debug\net8.0-windows\EmailClient.pdb
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailClient\obj\Debug\net8.0-windows\EmailClient.genruntimeconfig.cache
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailClient\obj\Debug\net8.0-windows\ref\EmailClient.dll

@@ -1,0 +1,106 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "F:\\text.c\\c#\\EmailClient\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{DE692A27-7594-4B8B-8AEA-7362721334E3}|EmailServer\\EmailServer.csproj|f:\\text.c\\c#\\emailclient\\emailserver\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE692A27-7594-4B8B-8AEA-7362721334E3}|EmailServer\\EmailServer.csproj|solutionrelative:emailserver\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FDAC94F5-7402-409B-8A6A-275AD40A96B5}|EmailClient\\EmailClient.csproj|F:\\text.c\\c#\\EmailClient\\emailclient\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FDAC94F5-7402-409B-8A6A-275AD40A96B5}|EmailClient\\EmailClient.csproj|solutionrelative:emailclient\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE692A27-7594-4B8B-8AEA-7362721334E3}|EmailServer\\EmailServer.csproj|F:\\text.c\\c#\\EmailClient\\emailserver\\journal.log||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{DE692A27-7594-4B8B-8AEA-7362721334E3}|EmailServer\\EmailServer.csproj|solutionrelative:emailserver\\journal.log||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FDAC94F5-7402-409B-8A6A-275AD40A96B5}|EmailClient\\EmailClient.csproj|F:\\text.c\\c#\\EmailClient\\emailclient\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FDAC94F5-7402-409B-8A6A-275AD40A96B5}|EmailClient\\EmailClient.csproj|solutionrelative:emailclient\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FDAC94F5-7402-409B-8A6A-275AD40A96B5}|EmailClient\\EmailClient.csproj|F:\\text.c\\c#\\EmailClient\\emailclient\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{FDAC94F5-7402-409B-8A6A-275AD40A96B5}|EmailClient\\EmailClient.csproj|solutionrelative:emailclient\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MainForm.cs [\u8BBE\u8BA1]",
+              "DocumentMoniker": "F:\\text.c\\c#\\EmailClient\\EmailClient\\MainForm.cs",
+              "RelativeDocumentMoniker": "EmailClient\\MainForm.cs",
+              "ToolTip": "F:\\text.c\\c#\\EmailClient\\EmailClient\\MainForm.cs [\u8BBE\u8BA1]",
+              "RelativeToolTip": "EmailClient\\MainForm.cs [\u8BBE\u8BA1]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-25T07:00:27.767Z",
+              "IsPinned": true,
+              "EditorCaption": " [\u8BBE\u8BA1]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MainForm.cs",
+              "DocumentMoniker": "F:\\text.c\\c#\\EmailClient\\EmailClient\\MainForm.cs",
+              "RelativeDocumentMoniker": "EmailClient\\MainForm.cs",
+              "ToolTip": "F:\\text.c\\c#\\EmailClient\\EmailClient\\MainForm.cs",
+              "RelativeToolTip": "EmailClient\\MainForm.cs",
+              "ViewState": "AQIAAP8AAAAAAAAAAAA4wDcBAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-07T11:57:15.652Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "journal.log",
+              "DocumentMoniker": "F:\\text.c\\c#\\EmailClient\\EmailServer\\journal.log",
+              "RelativeDocumentMoniker": "EmailServer\\journal.log",
+              "ToolTip": "F:\\text.c\\c#\\EmailClient\\EmailServer\\journal.log",
+              "RelativeToolTip": "EmailServer\\journal.log",
+              "ViewState": "AQIAAKUAAAAAAAAAAAAAAK8AAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-05-10T03:10:38.634Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "LoginForm.cs",
+              "DocumentMoniker": "F:\\text.c\\c#\\EmailClient\\EmailClient\\LoginForm.cs",
+              "RelativeDocumentMoniker": "EmailClient\\LoginForm.cs",
+              "ToolTip": "F:\\text.c\\c#\\EmailClient\\EmailClient\\LoginForm.cs",
+              "RelativeToolTip": "EmailClient\\LoginForm.cs",
+              "ViewState": "AQIAAAIAAAAAAAAAAAAgwA4AAAAPAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-08T08:02:10.407Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "F:\\text.c\\c#\\EmailClient\\EmailServer\\Program.cs",
+              "RelativeDocumentMoniker": "EmailServer\\Program.cs",
+              "ToolTip": "F:\\text.c\\c#\\EmailClient\\EmailServer\\Program.cs",
+              "RelativeToolTip": "EmailServer\\Program.cs",
+              "ViewState": "AQIAAMUAAAAAAAAAAAAUwM0AAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-08T07:21:12.758Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

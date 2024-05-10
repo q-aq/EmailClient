@@ -1,0 +1,42 @@
+F:\text.c\c#\EmailClient\EmailServer\bin\Debug\net8.0\EmailServer.exe
+F:\text.c\c#\EmailClient\EmailServer\bin\Debug\net8.0\EmailServer.deps.json
+F:\text.c\c#\EmailClient\EmailServer\bin\Debug\net8.0\EmailServer.runtimeconfig.json
+F:\text.c\c#\EmailClient\EmailServer\bin\Debug\net8.0\EmailServer.dll
+F:\text.c\c#\EmailClient\EmailServer\bin\Debug\net8.0\EmailServer.pdb
+F:\text.c\c#\EmailClient\EmailServer\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+F:\text.c\c#\EmailClient\EmailServer\bin\Debug\net8.0\MailKit.dll
+F:\text.c\c#\EmailClient\EmailServer\bin\Debug\net8.0\MimeKit.dll
+F:\text.c\c#\EmailClient\EmailServer\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+F:\text.c\c#\EmailClient\EmailServer\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+F:\text.c\c#\EmailClient\EmailServer\obj\Debug\net8.0\EmailServer.csproj.AssemblyReference.cache
+F:\text.c\c#\EmailClient\EmailServer\obj\Debug\net8.0\EmailServer.GeneratedMSBuildEditorConfig.editorconfig
+F:\text.c\c#\EmailClient\EmailServer\obj\Debug\net8.0\EmailServer.AssemblyInfoInputs.cache
+F:\text.c\c#\EmailClient\EmailServer\obj\Debug\net8.0\EmailServer.AssemblyInfo.cs
+F:\text.c\c#\EmailClient\EmailServer\obj\Debug\net8.0\EmailServer.csproj.CoreCompileInputs.cache
+F:\text.c\c#\EmailClient\EmailServer\obj\Debug\net8.0\EmailSer.F0CDA421.Up2Date
+F:\text.c\c#\EmailClient\EmailServer\obj\Debug\net8.0\EmailServer.dll
+F:\text.c\c#\EmailClient\EmailServer\obj\Debug\net8.0\refint\EmailServer.dll
+F:\text.c\c#\EmailClient\EmailServer\obj\Debug\net8.0\EmailServer.pdb
+F:\text.c\c#\EmailClient\EmailServer\obj\Debug\net8.0\EmailServer.genruntimeconfig.cache
+F:\text.c\c#\EmailClient\EmailServer\obj\Debug\net8.0\ref\EmailServer.dll
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailServer\bin\Debug\net8.0\EmailServer.exe
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailServer\bin\Debug\net8.0\EmailServer.deps.json
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailServer\bin\Debug\net8.0\EmailServer.runtimeconfig.json
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailServer\bin\Debug\net8.0\EmailServer.dll
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailServer\bin\Debug\net8.0\EmailServer.pdb
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailServer\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailServer\bin\Debug\net8.0\MailKit.dll
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailServer\bin\Debug\net8.0\MimeKit.dll
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailServer\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailServer\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailServer\obj\Debug\net8.0\EmailServer.csproj.AssemblyReference.cache
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailServer\obj\Debug\net8.0\EmailServer.GeneratedMSBuildEditorConfig.editorconfig
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailServer\obj\Debug\net8.0\EmailServer.AssemblyInfoInputs.cache
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailServer\obj\Debug\net8.0\EmailServer.AssemblyInfo.cs
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailServer\obj\Debug\net8.0\EmailServer.csproj.CoreCompileInputs.cache
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailServer\obj\Debug\net8.0\EmailSer.F0CDA421.Up2Date
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailServer\obj\Debug\net8.0\EmailServer.dll
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailServer\obj\Debug\net8.0\refint\EmailServer.dll
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailServer\obj\Debug\net8.0\EmailServer.pdb
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailServer\obj\Debug\net8.0\EmailServer.genruntimeconfig.cache
+D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailServer\obj\Debug\net8.0\ref\EmailServer.dll
