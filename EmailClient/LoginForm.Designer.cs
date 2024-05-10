@@ -52,7 +52,7 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(324, 38);
             textBox1.TabIndex = 1;
-            textBox1.Text = "13569718997@163.com";
+            textBox1.Text = "";
             // 
             // textBox2
             // 
