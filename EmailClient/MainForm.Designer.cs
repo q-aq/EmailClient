@@ -109,6 +109,9 @@
             label12 = new Label();
             label11 = new Label();
             label10 = new Label();
+            button3 = new Button();
+            label14 = new Label();
+            label16 = new Label();
             panel1.SuspendLayout();
             panel4.SuspendLayout();
             panel3.SuspendLayout();
@@ -519,6 +522,9 @@
             // 
             panelrecv.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             panelrecv.BackColor = Color.WhiteSmoke;
+            panelrecv.Controls.Add(label16);
+            panelrecv.Controls.Add(label14);
+            panelrecv.Controls.Add(button3);
             panelrecv.Controls.Add(dataGridView1);
             panelrecv.Controls.Add(label6);
             panelrecv.Location = new Point(200, 146);
@@ -1029,6 +1035,33 @@
             label10.TabIndex = 0;
             label10.Text = "姓名";
             // 
+            // button3
+            // 
+            button3.Location = new Point(1436, 5);
+            button3.Name = "button3";
+            button3.Size = new Size(150, 46);
+            button3.TabIndex = 2;
+            button3.Text = "刷新";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(1289, 31);
+            label14.Name = "label14";
+            label14.Size = new Size(0, 31);
+            label14.TabIndex = 3;
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Location = new Point(1436, 56);
+            label16.Name = "label16";
+            label16.Size = new Size(96, 31);
+            label16.TabIndex = 4;
+            label16.Text = "label16";
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(14F, 31F);
@@ -1039,13 +1072,13 @@
             Controls.Add(label7);
             Controls.Add(groupBox1);
             Controls.Add(panel1);
-            Controls.Add(panelmessage);
             Controls.Add(panelrecv);
             Controls.Add(panelmain);
             Controls.Add(paneldraft);
             Controls.Add(panelwrite);
             Controls.Add(panelAddressBook);
             Controls.Add(panelAddLinkMan);
+            Controls.Add(panelmessage);
             Margin = new Padding(4);
             Name = "MainForm";
             Text = "Email";
@@ -1170,5 +1203,8 @@
         private DataGridViewTextBoxColumn phone;
         private DataGridViewTextBoxColumn qq;
         private DataGridViewTextBoxColumn remarks;
+        private Label label16;
+        private Label label14;
+        private Button button3;
     }
 }

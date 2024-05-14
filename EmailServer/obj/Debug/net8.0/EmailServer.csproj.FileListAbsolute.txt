@@ -40,3 +40,4 @@ D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\
 D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailServer\obj\Debug\net8.0\EmailServer.pdb
 D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailServer\obj\Debug\net8.0\EmailServer.genruntimeconfig.cache
 D:\微信文件管理\WeChat Files\wxid_pj5z8w5bky3122\FileStorage\File\2024-05\EmailClient4.1\EmailClient\EmailServer\obj\Debug\net8.0\ref\EmailServer.dll
+F:\text.c\c#\EmailClient\EmailServer\obj\Debug\net8.0\EmailServer.sourcelink.json

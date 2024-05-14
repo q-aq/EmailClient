@@ -51,7 +51,7 @@ namespace EmailClient
             Send("IMAP", "PASSW", pass);
             log.write("GET", "密钥验证通过，IMAP与SMTP服务器准许登入");
             //请求收件箱
-            Send("IMAP", "INBOX","");
+            Send("IMAP", "INBOX", "");
             log.write("GET", "请求访问收件箱");
             //请求草稿箱
             Send("IMAP", "DRAFT", "");
@@ -66,7 +66,7 @@ namespace EmailClient
                 Writer = new BinaryWriter(client.GetStream());
                 log.write("LOGIN", "成功与服务器建立连接");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 log.write("REEOR", "无法连接到服务器 - 原因:" + ex.Message);
             }
@@ -75,7 +75,7 @@ namespace EmailClient
         {
             log.write("INFO", "消息接收循环开始");
             string? information;
-            while(true)
+            while (true)
             {
                 try
                 {
@@ -85,7 +85,7 @@ namespace EmailClient
                 }
                 catch (Exception ex)
                 {
-                    log.write("ERROR", "接收信息错误 - 原因:" +ex.Message);
+                    log.write("ERROR", "接收信息错误 - 原因:" + ex.Message);
                     break;
                 }
             }
@@ -94,10 +94,15 @@ namespace EmailClient
         {
             string operation = information[..5];
             string info = information[5..];
-            if(operation == "INBOX")//准备接收收件箱
+            if (operation == "INBOX")//准备接收收件箱
             {
                 log.write("INFO", "准备接收收件箱");
+                Recver.Inbox.Clear();
                 flag = 1;
+            }
+            else if (operation == "NEWEM")//表示是新邮件加入
+            {
+                flag = 0;
             }
             else if (operation == "DRAFT")//准备接收是草稿箱
             {
@@ -108,14 +113,14 @@ namespace EmailClient
             {
                 if (flag == 1)
                 {
-                    flag = 0;
+                    flag = -1;
                     log.write("INFO", "收件箱接收完毕正在向数据表中添加");
                     UpDateInbox();
                     log.write("INFO", "添加完毕");
                 }
                 if (flag == 2)
                 {
-                    flag = 0;
+                    flag = -1;
                     log.write("INFO", "草稿箱接收完毕，正在向数据表中添加");
                     UpDateDrafts();
                     log.write("INFO", "添加完毕");
@@ -129,9 +134,15 @@ namespace EmailClient
             else if (operation == "ENDRR")//表示一封邮件结束
             {
                 log.write("INFO", "邮件接收完毕");
-                if(flag == 0)
+                if (flag == -1)
                 {
 
+                }
+                else if (flag == 0)//新邮件
+                {
+                    log.write("INFO", "接收到新邮件");
+                    Recver.Inbox.Add(message);//向收件箱更新文件
+                    console.Text = "有新文件";
                 }
                 else if (flag == 1)
                 {
@@ -165,11 +176,11 @@ namespace EmailClient
             }
             else if (operation == "CCRRR")//抄送
             {
-                var cc = info.Split('<','>');//奇数部分为抄送内容
+                var cc = info.Split('<', '>');//奇数部分为抄送内容
                 int index = cc.Length;
-                for(int i = 0;i< cc.Length;i++)
+                for (int i = 0; i < cc.Length; i++)
                 {
-                    if(i % 2 != 0)
+                    if (i % 2 != 0)
                     {
                         message.cc += cc[i] + ";";
                     }
@@ -203,34 +214,41 @@ namespace EmailClient
         public void UpDateInbox()//更新收件箱
         {
             int i = 1;
-            foreach(var s in Recver.Inbox)
+            dataGridView1.Invoke(() =>
             {
-                var row = new DataGridViewRow();
-                row.CreateCells(dataGridView1);
-                row.Cells[0].Value = i;
-                row.Cells[1].Value = s.from;
-                row.Cells[2].Value = s.subject;
-                row.Cells[3].Value = s.time;
-                dataGridView1.Rows.Add(row);
-                i++;
-            }
+                dataGridView1.Rows.Clear();
+                foreach (var s in Recver.Inbox)
+                {
+                    var row = new DataGridViewRow();
+                    row.CreateCells(dataGridView1);
+                    row.Cells[0].Value = i;
+                    row.Cells[1].Value = s.from;
+                    row.Cells[2].Value = s.subject;
+                    row.Cells[3].Value = s.time;
+                    dataGridView1.Rows.Add(row);
+                    i++;
+                }
+            });
         }
         public void UpDateDrafts()//更新草稿箱
         {
             int i = 1;
-            foreach(var s in Recver.Drafts)
+            dataGridView2.Invoke(() =>
             {
-                var row = new DataGridViewRow();
-                row.CreateCells(dataGridView2);
-                row.Cells[0].Value = i;
-                row.Cells[1].Value = s.from;
-                row.Cells[2].Value = s.subject;
-                row.Cells[3].Value = s.time;
-                dataGridView2.Rows.Add(row);
-                i++;
-            }
+                foreach (var s in Recver.Drafts)
+                {
+                    var row = new DataGridViewRow();
+                    row.CreateCells(dataGridView2);
+                    row.Cells[0].Value = i;
+                    row.Cells[1].Value = s.from;
+                    row.Cells[2].Value = s.subject;
+                    row.Cells[3].Value = s.time;
+                    dataGridView2.Rows.Add(row);
+                    i++;
+                }
+            });
         }
-        public void SendMail(Message message,string server)
+        public void SendMail(Message message, string server)
         {
             Send(server, "EMAIL", "");
             Send(server, "TORRR", message.to);
@@ -280,24 +298,24 @@ namespace EmailClient
         {
             bool AllEmailTrue = true;
             //清空所有控件
-            log.write("INFO","正在初始化邮件信息");
+            log.write("INFO", "正在初始化邮件信息");
             Message message = new Message();
             message.to = textBox1.Text;//收件人，这里需要判断邮件格式是否合法
             message.subject = textBox3.Text;
             message.body = textBox4.Text;
             var list = message.to.Split(";");
-            foreach( var item in list )
+            foreach (var item in list)
             {
                 if (item.Length == 0) continue;
-                if(!IsValidEmail(item))//有一个是不合法的邮箱地址
+                if (!IsValidEmail(item))//有一个是不合法的邮箱地址
                 {
                     AllEmailTrue = false;
                 }
             }
             log.write("INFO", "邮件初始化完毕");
-            if(AllEmailTrue)
+            if (AllEmailTrue)
             {
-                SendMail(message,"SMTP");
+                SendMail(message, "SMTP");
                 log.write("INFO", "邮件已发送");
             }
             else
@@ -308,12 +326,7 @@ namespace EmailClient
         }
         private void buttonsave_Click(object sender, EventArgs e)//保存按钮，使用文件保存
         {
-            Message message = new Message();
-            message.to = textBox1.Text;
-            message.cc = textBox2.Text;
-            message.subject = textBox3.Text;
-            message.body = textBox4.Text;
-            SendMail(message, "IMAP");
+
         }
         private void buttonexit_Click(object sender, EventArgs e)//退出按钮
         {
@@ -775,24 +788,24 @@ namespace EmailClient
             bool annonation = false;//注释
             char[] buffer = new char[info.Length];
             int index = 0;
-            foreach(var s in info)
+            foreach (var s in info)
             {
-                if(s == '<')//遇到左括号设置注释为true
+                if (s == '<')//遇到左括号设置注释为true
                 {
                     annonation = true;
                 }
-                if(s == '>')//遇到右括号设置注释为false
+                if (s == '>')//遇到右括号设置注释为false
                 {
                     annonation = false;
                     continue;
                 }
-                if(!annonation)//如果注释为false，则记录信息
+                if (!annonation)//如果注释为false，则记录信息
                 {
                     buffer[index] = s;
                     index++;
                 }
             }
-            if(index == 0)
+            if (index == 0)
             {
                 return "";
             }
@@ -882,6 +895,13 @@ namespace EmailClient
             {
                 return info;
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)//刷新收件箱
+        {
+            Send("IMAP", "INBOX", "");//发送刷新指令
+            //dataGridView1.SelectedRows.Clear();
+            label16.Text = "上次刷新事件:" + DateTime.Now.ToString("F");
         }
     }
     public class Message

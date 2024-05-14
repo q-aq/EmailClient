@@ -7,6 +7,9 @@ using MailKit;
 using System.Diagnostics;
 using System.Text;
 using Org.BouncyCastle.Tls;
+using System.Threading;
+using Org.BouncyCastle.Security;
+using System;
 
 namespace EmailServer
 {
@@ -66,6 +69,7 @@ namespace EmailServer
             Reader = new BinaryReader(tcpClient.GetStream());
             Writer = new BinaryWriter(tcpClient.GetStream());
             Task.Run(()=>RecvInfo());
+            //Task.Run(()=>HaveNewFile());
         }
         public async Task RecvInfo()//接收信息
         {
@@ -124,6 +128,7 @@ namespace EmailServer
                 log.INFO("客户端请求访问收件箱");
                 Console.WriteLine("访问允许");
                 log.INFO("允许访问收件箱");
+                imap.Inbox.Clear();//先清空
                 await imap.GetInboxAsync();//向IMAP服务器请求访问收件箱
                 Console.WriteLine("尝试向用户发送中");
                 log.INFO("尝试向用户发送收件箱内容");
@@ -169,51 +174,6 @@ namespace EmailServer
                     Console.WriteLine("发送失败");
                     log.ERROR("向用户发送草稿箱过程出错 - 原因:" + ex.Message);
                 }
-            }
-            if (operation == "EMAIL")
-            {
-                Console.WriteLine("IMAP开始接收邮件");
-                message = new MailMessage();
-            }
-            if (operation == "TORRR")//收件人
-            {
-                Console.WriteLine("收件人");
-                var list = maininfo.Split(';');
-                foreach(var s in list)
-                {
-                    message.To.Add(s);
-                }
-            }
-            if (operation == "SUBJE")//主题
-            {
-                Console.WriteLine("主题");
-                message.Subject = maininfo;
-            }
-            if (operation == "BODYR")//正文
-            {
-                Console.WriteLine("正文");
-                message.Body = maininfo;
-            }
-            if (operation == "FROMR")//发件人
-            {
-                Console.WriteLine("发件人");
-                message.From = new MailAddress(maininfo);
-            }
-            if (operation == "CCRRR")//抄送
-            {
-                Console.WriteLine("抄送");
-                var list = maininfo.Split(';');
-                foreach (var s in list)
-                {
-                    message.CC.Add(s);
-                }
-            }
-            if (operation == "ENDRR")//结束
-            {
-                Console.WriteLine("接收完毕");
-                //mime = new MimeMessage(message);
-                imap.AddDraftsAsync(mime);
-                Send("CHANG", "已修改");
             }
         }
         public async Task DealSMTP(string operation,string maininfo)
@@ -335,6 +295,20 @@ namespace EmailServer
             Send("CCRRR", cc);//抄送
             Send("ENDRR", "");//表示一封邮件结束
         }
+        /*public void HaveNewFile()
+        {
+            Console.WriteLine("开始监听新邮件");
+            while(true)
+            {
+                if(imap.flag)//表示有新的邮件
+                {
+                    Console.WriteLine("已将新邮件发送到客户端");
+                    Send("NEWEM", "");//告知发送的是新邮件
+                    SendEmail(imap.Inbox[imap.Inbox.Count - 1]);//发送邮件
+                    imap.flag = false;
+                }
+            }
+        }*/
         public void Send(string operation,string info)//向客户端发送信息
         {
             string maininfo = operation + info;
@@ -494,6 +468,7 @@ namespace EmailServer
     {
         private LOG log = Program.log;
         private string name;
+        public bool flag = false;
         private string pass;
         private string imapserver;
         private int port = 993;
@@ -525,6 +500,25 @@ namespace EmailServer
                 var serverImplementation = client.Identify(clientImplementation);
                 //Console.WriteLine("IMAP服务器验证通过");
                 log.INFO("IMAP登入成功");
+                /*client.Inbox.CountChanged +=  (sender, e) =>//注册事件
+                //暂时没有用处找不到异常点在哪里，该事件无法被触发
+                {
+                    try
+                    {
+                        Console.WriteLine("Count发生变化");
+                        if (client.Inbox.Count > count)//当收件箱的邮件比链表中多的时候
+                        {
+                            Console.WriteLine("有新邮件到达");
+                            var newmessage = client.Inbox.GetMessage(client.Inbox.Count - 1);//获取最后一一封邮件
+                            Inbox.Add(newmessage);
+                            flag = true;//告诉服务器有新邮件送达
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"新邮件{ex.Message}");
+                    }
+                };*/
             }
             catch(Exception ex)
             {
@@ -545,7 +539,7 @@ namespace EmailServer
                 Console.WriteLine("正在加载收件箱,请稍后");
                 log.INFO("正在加载收件箱");
                 var inbox = client.Inbox;
-                inbox.Open(FolderAccess.ReadWrite);
+                await inbox.OpenAsync(FolderAccess.ReadWrite);
                 int index = inbox.Count;
                 for (int i = 0; i < index; i++)
                 {
