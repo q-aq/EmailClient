@@ -16,12 +16,14 @@ namespace EmailClient
         {
             InitializeComponent();
             client = new TcpClient();
+            Connect();
+            Task.Run(() => RecvInfo());
         }
-        public async Task Connect()
+        public void Connect()
         {
             try
             {
-                await client.ConnectAsync(ip,port);//尝试连接
+                client.Connect(ip, port);//尝试连接
                 Reader = new BinaryReader(client.GetStream());
                 Writer = new BinaryWriter(client.GetStream());
             }
@@ -36,7 +38,7 @@ namespace EmailClient
             {
                 while (client.Connected)
                 {
-                    string information = await Task.Run(()=> Reader.ReadString());
+                    string information = Reader.ReadString();
                     if (!string.IsNullOrEmpty(information))
                     {
                         DealInforamtion(information);
@@ -56,11 +58,11 @@ namespace EmailClient
         {
             string operation = information[..5];
             string info = information[5..];
-            if(operation == "ACCEP")//服务器接收到邮箱名
+            if (operation == "ACCEP")//服务器接收到邮箱名
             {
                 Send("SMTP", "PASSW", pass);
             }
-            else if(operation == "ALLOW")//允许登录
+            else if (operation == "ALLOW")//允许登录
             {
                 this.Invoke(() =>
                 {
@@ -71,14 +73,15 @@ namespace EmailClient
                 });
                 Send("SMTP", "CLOSE", "close");
             }
-            else if(operation == "REFUS")//不允许登录
+            else if (operation == "REFUS")//不允许登录
             {
-
+                information = "";
+                MessageBox.Show("用户名或密码错误拒绝连接");
             }
         }
         public bool Check()
         {
-            if(textBox1.Text == "" || textBox2.Text == "")
+            if (textBox1.Text == "" || textBox2.Text == "")
             {
                 return true;
             }
@@ -87,13 +90,13 @@ namespace EmailClient
                 return false;
             }
         }
-        public void Send(string server,string oper,string info)
+        public void Send(string server, string oper, string info)
         {
             var mainfo = server + oper + info;
             Writer.Write(mainfo);
             Writer.Flush();
         }
-        private async void button1_Click(object sender, EventArgs e)  // 登录按钮
+        private void button1_Click(object sender, EventArgs e)  // 登录按钮
         {
             if (Check())
             {
@@ -103,17 +106,12 @@ namespace EmailClient
             {
                 name = textBox1.Text;
                 pass = textBox2.Text;
-                await Connect();
-                Task.Run(() => RecvInfo());
                 Send("SMTP", "LOGIN", name);
             }
         }
-        private void button2_Click(object sender, EventArgs e)//测试按钮
+        private void button2_Click_1(object sender, EventArgs e)
         {
-            MainForm s = new MainForm(name,pass);
-            s.Show();
-            this.Hide();
-            s.FormClosed += (s, args) => this.Close();
+            Close();
         }
     }
 }

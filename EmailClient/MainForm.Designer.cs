@@ -47,6 +47,9 @@
             panelmain = new Panel();
             label4 = new Label();
             panelwrite = new Panel();
+            button5 = new Button();
+            label17 = new Label();
+            button4 = new Button();
             textBox4 = new TextBox();
             textBox3 = new TextBox();
             textBox2 = new TextBox();
@@ -60,6 +63,10 @@
             buttonsend = new Button();
             label6 = new Label();
             panelrecv = new Panel();
+            button6 = new Button();
+            label16 = new Label();
+            label14 = new Label();
+            button3 = new Button();
             dataGridView1 = new DataGridView();
             Column4 = new DataGridViewTextBoxColumn();
             Column1 = new DataGridViewTextBoxColumn();
@@ -84,6 +91,10 @@
             labelfrom = new Label();
             textBoxmessage = new TextBox();
             panelAddressBook = new Panel();
+            panel9 = new Panel();
+            buttonCancel = new Button();
+            buttonDelete = new Button();
+            buttonWrite = new Button();
             buttonAddLinkman = new Button();
             dataGridView3 = new DataGridView();
             check = new DataGridViewCheckBoxColumn();
@@ -92,10 +103,6 @@
             phone = new DataGridViewTextBoxColumn();
             qq = new DataGridViewTextBoxColumn();
             remarks = new DataGridViewTextBoxColumn();
-            panel9 = new Panel();
-            buttonCancel = new Button();
-            buttonDelete = new Button();
-            buttonWrite = new Button();
             panelAddLinkMan = new Panel();
             buttonCancelLinkMan = new Button();
             buttonSaveLinkMan = new Button();
@@ -109,9 +116,6 @@
             label12 = new Label();
             label11 = new Label();
             label10 = new Label();
-            button3 = new Button();
-            label14 = new Label();
-            label16 = new Label();
             panel1.SuspendLayout();
             panel4.SuspendLayout();
             panel3.SuspendLayout();
@@ -129,8 +133,8 @@
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             panelmessage.SuspendLayout();
             panelAddressBook.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView3).BeginInit();
             panel9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView3).BeginInit();
             panelAddLinkMan.SuspendLayout();
             SuspendLayout();
             // 
@@ -384,6 +388,9 @@
             // 
             panelwrite.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             panelwrite.BackColor = Color.WhiteSmoke;
+            panelwrite.Controls.Add(button5);
+            panelwrite.Controls.Add(label17);
+            panelwrite.Controls.Add(button4);
             panelwrite.Controls.Add(textBox4);
             panelwrite.Controls.Add(textBox3);
             panelwrite.Controls.Add(textBox2);
@@ -395,11 +402,40 @@
             panelwrite.Controls.Add(buttonexit);
             panelwrite.Controls.Add(buttonsave);
             panelwrite.Controls.Add(buttonsend);
-            panelwrite.Location = new Point(204, 146);
+            panelwrite.Location = new Point(204, 137);
             panelwrite.Margin = new Padding(4);
             panelwrite.Name = "panelwrite";
-            panelwrite.Size = new Size(1600, 669);
+            panelwrite.Size = new Size(1600, 687);
             panelwrite.TabIndex = 5;
+            // 
+            // button5
+            // 
+            button5.Location = new Point(1420, 23);
+            button5.Name = "button5";
+            button5.Size = new Size(150, 46);
+            button5.TabIndex = 13;
+            button5.Text = "删除附件";
+            button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click;
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Location = new Point(789, 24);
+            label17.Name = "label17";
+            label17.Size = new Size(96, 31);
+            label17.TabIndex = 12;
+            label17.Text = "label17";
+            // 
+            // button4
+            // 
+            button4.Location = new Point(600, 16);
+            button4.Name = "button4";
+            button4.Size = new Size(150, 46);
+            button4.TabIndex = 11;
+            button4.Text = "选择附件";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
             // 
             // textBox4
             // 
@@ -522,16 +558,54 @@
             // 
             panelrecv.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             panelrecv.BackColor = Color.WhiteSmoke;
+            panelrecv.Controls.Add(button6);
             panelrecv.Controls.Add(label16);
             panelrecv.Controls.Add(label14);
             panelrecv.Controls.Add(button3);
             panelrecv.Controls.Add(dataGridView1);
             panelrecv.Controls.Add(label6);
-            panelrecv.Location = new Point(200, 146);
+            panelrecv.Location = new Point(200, 139);
             panelrecv.Margin = new Padding(4);
             panelrecv.Name = "panelrecv";
-            panelrecv.Size = new Size(1604, 677);
+            panelrecv.Size = new Size(1604, 684);
             panelrecv.TabIndex = 4;
+            // 
+            // button6
+            // 
+            button6.Location = new Point(278, 26);
+            button6.Name = "button6";
+            button6.Size = new Size(150, 46);
+            button6.TabIndex = 5;
+            button6.Text = "查看附件";
+            button6.UseVisualStyleBackColor = true;
+            button6.Click += button6_Click;
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Location = new Point(1002, 50);
+            label16.Name = "label16";
+            label16.Size = new Size(96, 31);
+            label16.TabIndex = 4;
+            label16.Text = "label16";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(1289, 31);
+            label14.Name = "label14";
+            label14.Size = new Size(0, 31);
+            label14.TabIndex = 3;
+            // 
+            // button3
+            // 
+            button3.Location = new Point(1436, 5);
+            button3.Name = "button3";
+            button3.Size = new Size(150, 46);
+            button3.TabIndex = 2;
+            button3.Text = "刷新";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // dataGridView1
             // 
@@ -612,9 +686,8 @@
             console.Location = new Point(776, 57);
             console.Margin = new Padding(4, 0, 4, 0);
             console.Name = "console";
-            console.Size = new Size(82, 31);
+            console.Size = new Size(0, 31);
             console.TabIndex = 8;
-            console.Text = "label9";
             // 
             // paneldraft
             // 
@@ -780,14 +853,58 @@
             // 
             // panelAddressBook
             // 
+            panelAddressBook.Controls.Add(panel9);
             panelAddressBook.Controls.Add(buttonAddLinkman);
             panelAddressBook.Controls.Add(dataGridView3);
-            panelAddressBook.Controls.Add(panel9);
             panelAddressBook.Location = new Point(206, 137);
             panelAddressBook.Margin = new Padding(6, 5, 6, 5);
             panelAddressBook.Name = "panelAddressBook";
             panelAddressBook.Size = new Size(1598, 687);
             panelAddressBook.TabIndex = 12;
+            // 
+            // panel9
+            // 
+            panel9.Controls.Add(buttonCancel);
+            panel9.Controls.Add(buttonDelete);
+            panel9.Controls.Add(buttonWrite);
+            panel9.Location = new Point(34, 2);
+            panel9.Margin = new Padding(6, 5, 6, 5);
+            panel9.Name = "panel9";
+            panel9.Size = new Size(1520, 126);
+            panel9.TabIndex = 1;
+            // 
+            // buttonCancel
+            // 
+            buttonCancel.Location = new Point(412, 60);
+            buttonCancel.Margin = new Padding(6, 5, 6, 5);
+            buttonCancel.Name = "buttonCancel";
+            buttonCancel.Size = new Size(190, 44);
+            buttonCancel.TabIndex = 2;
+            buttonCancel.Text = "取消选中";
+            buttonCancel.UseVisualStyleBackColor = true;
+            buttonCancel.Click += buttonCancel_Click;
+            // 
+            // buttonDelete
+            // 
+            buttonDelete.Location = new Point(212, 60);
+            buttonDelete.Margin = new Padding(6, 5, 6, 5);
+            buttonDelete.Name = "buttonDelete";
+            buttonDelete.Size = new Size(188, 42);
+            buttonDelete.TabIndex = 1;
+            buttonDelete.Text = "删除";
+            buttonDelete.UseVisualStyleBackColor = true;
+            buttonDelete.Click += buttonDelete_Click;
+            // 
+            // buttonWrite
+            // 
+            buttonWrite.Location = new Point(6, 62);
+            buttonWrite.Margin = new Padding(6, 5, 6, 5);
+            buttonWrite.Name = "buttonWrite";
+            buttonWrite.Size = new Size(194, 42);
+            buttonWrite.TabIndex = 0;
+            buttonWrite.Text = "写信";
+            buttonWrite.UseVisualStyleBackColor = true;
+            buttonWrite.Click += buttonWrite_Click;
             // 
             // buttonAddLinkman
             // 
@@ -856,50 +973,6 @@
             remarks.HeaderText = "备注";
             remarks.MinimumWidth = 10;
             remarks.Name = "remarks";
-            // 
-            // panel9
-            // 
-            panel9.Controls.Add(buttonCancel);
-            panel9.Controls.Add(buttonDelete);
-            panel9.Controls.Add(buttonWrite);
-            panel9.Location = new Point(32, 2);
-            panel9.Margin = new Padding(6, 5, 6, 5);
-            panel9.Name = "panel9";
-            panel9.Size = new Size(1522, 126);
-            panel9.TabIndex = 1;
-            // 
-            // buttonCancel
-            // 
-            buttonCancel.Location = new Point(412, 60);
-            buttonCancel.Margin = new Padding(6, 5, 6, 5);
-            buttonCancel.Name = "buttonCancel";
-            buttonCancel.Size = new Size(190, 44);
-            buttonCancel.TabIndex = 2;
-            buttonCancel.Text = "取消选中";
-            buttonCancel.UseVisualStyleBackColor = true;
-            buttonCancel.Click += buttonCancel_Click;
-            // 
-            // buttonDelete
-            // 
-            buttonDelete.Location = new Point(212, 60);
-            buttonDelete.Margin = new Padding(6, 5, 6, 5);
-            buttonDelete.Name = "buttonDelete";
-            buttonDelete.Size = new Size(188, 42);
-            buttonDelete.TabIndex = 1;
-            buttonDelete.Text = "删除";
-            buttonDelete.UseVisualStyleBackColor = true;
-            buttonDelete.Click += buttonDelete_Click;
-            // 
-            // buttonWrite
-            // 
-            buttonWrite.Location = new Point(6, 62);
-            buttonWrite.Margin = new Padding(6, 5, 6, 5);
-            buttonWrite.Name = "buttonWrite";
-            buttonWrite.Size = new Size(194, 42);
-            buttonWrite.TabIndex = 0;
-            buttonWrite.Text = "写信";
-            buttonWrite.UseVisualStyleBackColor = true;
-            buttonWrite.Click += buttonsend_Click;
             // 
             // panelAddLinkMan
             // 
@@ -1035,33 +1108,6 @@
             label10.TabIndex = 0;
             label10.Text = "姓名";
             // 
-            // button3
-            // 
-            button3.Location = new Point(1436, 5);
-            button3.Name = "button3";
-            button3.Size = new Size(150, 46);
-            button3.TabIndex = 2;
-            button3.Text = "刷新";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
-            // 
-            // label14
-            // 
-            label14.AutoSize = true;
-            label14.Location = new Point(1289, 31);
-            label14.Name = "label14";
-            label14.Size = new Size(0, 31);
-            label14.TabIndex = 3;
-            // 
-            // label16
-            // 
-            label16.AutoSize = true;
-            label16.Location = new Point(1436, 56);
-            label16.Name = "label16";
-            label16.Size = new Size(96, 31);
-            label16.TabIndex = 4;
-            label16.Text = "label16";
-            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(14F, 31F);
@@ -1072,13 +1118,13 @@
             Controls.Add(label7);
             Controls.Add(groupBox1);
             Controls.Add(panel1);
-            Controls.Add(panelrecv);
-            Controls.Add(panelmain);
-            Controls.Add(paneldraft);
             Controls.Add(panelwrite);
             Controls.Add(panelAddressBook);
             Controls.Add(panelAddLinkMan);
             Controls.Add(panelmessage);
+            Controls.Add(panelrecv);
+            Controls.Add(panelmain);
+            Controls.Add(paneldraft);
             Margin = new Padding(4);
             Name = "MainForm";
             Text = "Email";
@@ -1112,8 +1158,8 @@
             panelmessage.ResumeLayout(false);
             panelmessage.PerformLayout();
             panelAddressBook.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dataGridView3).EndInit();
             panel9.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridView3).EndInit();
             panelAddLinkMan.ResumeLayout(false);
             panelAddLinkMan.PerformLayout();
             ResumeLayout(false);
@@ -1206,5 +1252,9 @@
         private Label label16;
         private Label label14;
         private Button button3;
+        private Label label17;
+        private Button button4;
+        private Button button5;
+        private Button button6;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.IO;
 using System.Net.Mail;
 using System.Net.Sockets;
 using System.Text;
@@ -46,10 +47,11 @@ namespace EmailClient
         {
             Recver = new MailRecver(email, pass);
             Sender = new MailSender(email, pass);
+            LoadContactsIntoDataGridView("contacts.txt",dataGridView3);//加载通讯录
             //请求连接
             Send("IMAP", "LOGIN", email);
             Send("IMAP", "PASSW", pass);
-            log.write("GET", "密钥验证通过，IMAP与SMTP服务器准许登入");
+            log.write("GET", "密钥验证通过，服务器准许登入");
             //请求收件箱
             Send("IMAP", "INBOX", "");
             log.write("GET", "请求访问收件箱");
@@ -64,16 +66,16 @@ namespace EmailClient
                 await client.ConnectAsync(ip, port);
                 Reader = new BinaryReader(client.GetStream());
                 Writer = new BinaryWriter(client.GetStream());
-                log.write("LOGIN", "成功与服务器建立连接");
+                log.write("LOGIN", "成功与服务器建立TCP连接");
             }
             catch (Exception ex)
             {
-                log.write("REEOR", "无法连接到服务器 - 原因:" + ex.Message);
+                log.ERROR("无法连接到服务器 - 原因:" + ex.Message + "line: 73");
             }
         }
         public void RecvInfo()//接收信息
         {
-            log.write("INFO", "消息接收循环开始");
+            log.INFO("消息接收循环开始");
             string? information;
             while (true)
             {
@@ -85,7 +87,7 @@ namespace EmailClient
                 }
                 catch (Exception ex)
                 {
-                    log.write("ERROR", "接收信息错误 - 原因:" + ex.Message);
+                    log.ERROR("接收信息错误 - 原因:" + ex.Message + "line: 90");
                     break;
                 }
             }
@@ -96,7 +98,7 @@ namespace EmailClient
             string info = information[5..];
             if (operation == "INBOX")//准备接收收件箱
             {
-                log.write("INFO", "准备接收收件箱");
+                log.INFO("准备接收收件箱");
                 Recver.Inbox.Clear();
                 flag = 1;
             }
@@ -106,7 +108,7 @@ namespace EmailClient
             }
             else if (operation == "DRAFT")//准备接收是草稿箱
             {
-                log.write("INFO", "准备接收草稿箱");
+                log.INFO("准备接收草稿箱");
                 flag = 2;
             }
             else if (operation == "OVERR")//接收完毕，将标识置为默认
@@ -114,35 +116,28 @@ namespace EmailClient
                 if (flag == 1)
                 {
                     flag = -1;
-                    log.write("INFO", "收件箱接收完毕正在向数据表中添加");
+                    log.INFO("收件箱接收完毕正在向数据表中添加");
                     UpDateInbox();
-                    log.write("INFO", "添加完毕");
+                    log.INFO("添加完毕");
+                    label16.Text = "最后一次加载时间:" + DateTime.Now.ToString("F");
                 }
                 if (flag == 2)
                 {
                     flag = -1;
-                    log.write("INFO", "草稿箱接收完毕，正在向数据表中添加");
+                    log.INFO("草稿箱接收完毕，正在向数据表中添加");
                     UpDateDrafts();
-                    log.write("INFO", "添加完毕");
+                    log.INFO("添加完毕");
                 }
             }
             else if (operation == "BEGIN")//表示一封邮件开始
             {
-                log.write("INFO", "准备接收邮件");
                 message = new Message();
             }
             else if (operation == "ENDRR")//表示一封邮件结束
             {
-                log.write("INFO", "邮件接收完毕");
                 if (flag == -1)
                 {
 
-                }
-                else if (flag == 0)//新邮件
-                {
-                    log.write("INFO", "接收到新邮件");
-                    Recver.Inbox.Add(message);//向收件箱更新文件
-                    console.Text = "有新文件";
                 }
                 else if (flag == 1)
                 {
@@ -167,7 +162,6 @@ namespace EmailClient
             }
             else if (operation == "TORRR")//收件人
             {
-                log.write("OBTAIN", "正在接收信息");
                 message.to = info;
             }
             else if (operation == "BODYR")//正文
@@ -189,20 +183,48 @@ namespace EmailClient
             else if (operation == "TRUER")//发送成功
             {
                 MessageBox.Show("邮件发送成功");
-                log.write("INFO", "邮件发送完毕");
+                log.INFO("邮件发送完毕");
                 textBox1.Text = string.Empty;
                 textBox2.Text = string.Empty;
                 textBox3.Text = string.Empty;
                 textBox4.Text = string.Empty;
+                label17.Text = string.Empty;
+                Sender.files.Clear();
             }
             else if (operation == "FALSE")
             {
                 MessageBox.Show("邮件发送失败");
-                log.write("INFO", "邮件发送失败 - 原因:" + info);
+                log.ERROR("邮件发送失败 - 原因:" + info + "line: 197");
             }
             else if (operation == "CHANG")
             {
                 MessageBox.Show(info);
+            }
+            else if (operation == "HAFIL")//找到附件
+            {
+                FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+                folderBrowserDialog.Description = "请选择一个文件夹";
+                folderBrowserDialog.ShowNewFolderButton = true;
+                this.Invoke(() =>
+                {
+                    DialogResult result = folderBrowserDialog.ShowDialog();
+                    if (result == DialogResult.OK /*&& string.IsNullOrWhiteSpace(folderBrowserDialog.SelectedPath)*/)
+                    {
+                        string path = folderBrowserDialog.SelectedPath;//获取选择的文件夹的地址
+                        Send("IMAP", "PATHR", path);//发送文件夹地址
+                        Send("IMAP", "FILES", info);
+                    }
+                });
+            }
+            else if (operation == "NOFIL")//没找到附件
+            {
+                MessageBox.Show("没有找到附件");
+                log.INFO("没有找到任何附件信息");
+            }
+            else if (operation == "FISUC")//附件发送完毕
+            {
+                MessageBox.Show("附件被保存到" + info);
+                log.INFO($"附件已保存 - 位置:{info}");
             }
         }
         public void Send(string server, string oper, string info)//发送信息
@@ -229,6 +251,7 @@ namespace EmailClient
                     i++;
                 }
             });
+            log.INFO("收件箱更新完毕");
         }
         public void UpDateDrafts()//更新草稿箱
         {
@@ -248,15 +271,24 @@ namespace EmailClient
                 }
             });
         }
-        public void SendMail(Message message, string server)
+        public void SendMail(Message message, string server)//发信
         {
             Send(server, "EMAIL", "");
+            log.INFO("开始记录即将发送的邮件");
             Send(server, "TORRR", message.to);
+            log.INFO("收件人:" + message.to);
             Send(server, "SUBJE", message.subject);
+            log.INFO("主题:" + message.subject);
             Send(server, "BODYR", message.body);
+            log.INFO("正文:" + message.body);
             Send(server, "FROMR", email);
+            log.INFO("发件人:" + email);
             Send(server, "CCRRR", message.cc);
+            log.INFO("抄送列表:" + message.cc);
+            Send(server, "FILES", message.files);
+            log.INFO("附件:" + message.files);
             Send(server, "ENDRR", "");
+            log.INFO("邮件记录完毕");
         }
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)//窗口关闭调用此函数
         {
@@ -275,7 +307,14 @@ namespace EmailClient
         {
             if (sender is LinkLabel linkLabel)
             {
-                linkLabel.Parent.BackColor = Color.FromArgb(224, 236, 250);
+                try
+                {
+                    linkLabel.Parent.BackColor = Color.FromArgb(224, 236, 250);
+                }
+                catch(Exception ex)
+                {
+                    log.ERROR("控件异常 - 原因:" + ex.Message);
+                }
             }
         }
         //鼠标退出控件重新变为白色
@@ -290,19 +329,35 @@ namespace EmailClient
         {
             if (sender is LinkLabel linkLabel)
             {
-                linkLabel.Parent.BackColor = SystemColors.Control;
+                try
+                {
+                    linkLabel.Parent.BackColor = SystemColors.Control;
+                }
+                catch(Exception ex)
+                {
+                    log.ERROR("控件异常 - 原因:" + ex.Message);
+                }
             }
         }
         //点击事件
         private void buttonsend_Click(object sender, EventArgs e)//发信按钮
         {
+            if(textBox1.Text.Length == 0)
+            {
+                MessageBox.Show("请输入收件人邮箱地址");
+                return;
+            }
             bool AllEmailTrue = true;
             //清空所有控件
-            log.write("INFO", "正在初始化邮件信息");
+            log.INFO("正在初始化邮件信息");
             Message message = new Message();
-            message.to = textBox1.Text;//收件人，这里需要判断邮件格式是否合法
+            message.to = textBox1.Text;
             message.subject = textBox3.Text;
             message.body = textBox4.Text;
+            foreach (var s in Sender.files)
+            {
+                message.files += s + ";";
+            }
             var list = message.to.Split(";");
             foreach (var item in list)
             {
@@ -312,16 +367,17 @@ namespace EmailClient
                     AllEmailTrue = false;
                 }
             }
-            log.write("INFO", "邮件初始化完毕");
+            log.INFO("邮件初始化完毕");
             if (AllEmailTrue)
             {
                 SendMail(message, "SMTP");
-                log.write("INFO", "邮件已发送");
+                log.INFO("邮件已发送");
             }
             else
             {
                 MessageBox.Show("邮件格式不合法");
                 log.write("WARNING", "邮件格式不合法 - 不合法目标:" + message.to);
+                Sender.files.Clear();
             }
         }
         private void buttonsave_Click(object sender, EventArgs e)//保存按钮，使用文件保存
@@ -399,21 +455,6 @@ namespace EmailClient
             panelmain.Visible = false;
             panelmessage.Visible = false;
             panelrecv.Visible = false;
-            string filePath = "contacts.txt";// 获取文件路径
-            DataGridView dataGridView3 = this.dataGridView3;
-            if (!File.Exists(filePath))// 检查文件是否存在
-            {
-                try// 文件不存在，创建一个空的contacts.txt文件
-                {
-                    File.Create(filePath).Close();
-                    MessageBox.Show("联系人文件不存在，已为您创建一个新的空文件。", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("创建联系人文件时发生错误：" + ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            LoadContactsIntoDataGridView(filePath, dataGridView3);// 加载并显示联系人信息
         }
         private void linkLabel5_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)//草稿箱
         {
@@ -434,13 +475,17 @@ namespace EmailClient
                 if (yn == DialogResult.Yes)
                 {
                     dataGridView2.Rows.Remove(row);//删除被选中行
-                    log.write("INFO", "用户尝试删除草稿箱");
+                    log.INFO("用户尝试删除草稿箱");
                 }
             }
         }
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)//当某个单元格被双击，获取行号，通过链表获取对应邮件信息
         {
-            int index = e.RowIndex;
+            int temp = e.RowIndex;
+            DataGridViewRow row = dataGridView1.Rows[temp];
+            string? sindex = row.Cells[0].Value.ToString();
+            int index = Convert.ToInt32(sindex)-1;
+            //console.Text = index.ToString();
             if (index < 0) return;
             panelmain.Visible = false;
             panelrecv.Visible = false;
@@ -579,6 +624,72 @@ namespace EmailClient
             UncheckAllCheckboxes();// 将所有复选框设置为未选中状态
             panel9.Visible = false;// 隐藏 panel9
         }
+        private void button3_Click(object sender, EventArgs e)//刷新收件箱
+        {
+            Send("IMAP", "INBOX", "");//发送刷新指令
+            //dataGridView1.SelectedRows.Clear();
+            label16.Text = "最后一次刷新时间:" + DateTime.Now.ToString("F");
+        }
+        private void button4_Click(object sender, EventArgs e)//选择附件
+        {
+            //打开一个文件选择框
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            string filepath = Directory.GetCurrentDirectory();
+            string filename;
+            filepath = filepath.Substring(0, filepath.Length - 24);
+            openFileDialog.InitialDirectory = filepath;
+            openFileDialog.Filter = "所有文件|*.*";
+            DialogResult result = openFileDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                filename = openFileDialog.FileName;
+                label17.Text += filename + ";";
+                Sender.files.Add(filename);
+            }
+        }
+        private void button6_Click(object sender, EventArgs e)//查看附件
+        {
+            //获取编号，发送指令
+            if (dataGridView1.SelectedRows.Count <= 0)
+            {
+                MessageBox.Show("请选择邮件");
+                return;
+            }
+            int index = dataGridView1.SelectedRows[0].Index;
+            Send("IMAP", "CHECK", index.ToString());//检查是否有附件
+        }
+        private void button5_Click(object sender, EventArgs e)//删除附件
+        {
+            label17.Text = "";
+            Sender.files.Clear();
+        }
+        private void buttonWrite_Click(object sender, EventArgs e)//通讯录界面发送按钮
+        {
+            panelrecv.Visible = false;
+            paneldraft.Visible = false;
+            panelmain.Visible = false;
+            panelmessage.Visible = false;
+            panelAddressBook.Visible = false;
+            panelwrite.Visible = true;
+            // 存储选中的联系人邮箱信息
+            var selectedEmails = new List<string>();
+            // 遍历所有行，收集选中的行的邮箱信息
+            for (int i = 0; i < dataGridView3.Rows.Count; i++)
+            {
+                // 如果行被选中，则添加邮箱到列表
+                if (dataGridView3.Rows[i].Cells[0].Value is bool && (bool)dataGridView3.Rows[i].Cells[0].Value)
+                {
+                    // 假设邮箱地址在第三列（索引为 2）
+                    string email = dataGridView3.Rows[i].Cells[2].Value.ToString();
+                    selectedEmails.Add(email);
+                }
+            }
+            // 将邮箱地址转换为分号分隔的字符串
+            string emailList = string.Join(";", selectedEmails);
+
+            // 清空textBox1并设置选中的邮箱地址
+            textBox1.Text = emailList;
+        }
         //通讯录操作函数
         private void UpdatePanelVisibilityBasedOnSelection()
         {
@@ -715,7 +826,8 @@ namespace EmailClient
             if (email == null || email.Length == 0)
                 return true;
             // 正则表达式模式，用于匹配电子邮件地址
-            string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            //string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            string pattern = @"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$";
             // 创建正则表达式对象，并设置为忽略大小写
             Regex regex = new Regex(pattern);
             // 使用正则表达式对象的IsMatch方法判断字符串是否符合模式
@@ -748,161 +860,6 @@ namespace EmailClient
                 }
             }
         }
-        //
-        private byte[] GetBuffer(string[] buffer)//输入16进制字符串数组，转化为字节流
-        //例如6E 69 68 61 6F，为GBK编码的你好，获得字节流之后将该字节流返回，使用Encoding对象的GetString方法即可获取字符串
-        {
-            int i = 0;
-            byte[] bytes = new byte[buffer.Length];
-            ASCIIEncoding asc = new ASCIIEncoding();
-            foreach (var s in buffer)
-            {
-                if (s == "" || s == "\r\n") continue;
-                byte b = asc.GetBytes(s)[0];//获取第一个字符的ascii码值
-                if (b >= 0x30 && b <= 0x39)//表示为数字
-                {
-                    b -= 0x30;//0-9
-                }
-                if (b >= 0x41 && b <= 0x46)//表示字母
-                {
-                    b -= 0x37;//10-15;
-                }
-                byte c = asc.GetBytes(s)[1];
-                if (c >= 0x30 && c <= 0x39)//表示为数字
-                {
-                    c -= 0x30;//0-9
-                }
-                if (c >= 0x41 && c <= 0x46)//表示字母
-                {
-                    c -= 0x37;//10-15;
-                }
-                b *= 0x10;//b表示高位数字，需要乘以10H
-                b += c;//c表示低位数字
-                Debug.WriteLine(s + "16->" + b);
-                bytes[i++] = b;
-            }
-            return bytes;
-        }
-        private string CutHtml(string info)//删除html元素，提取核心信息
-        {
-            bool annonation = false;//注释
-            char[] buffer = new char[info.Length];
-            int index = 0;
-            foreach (var s in info)
-            {
-                if (s == '<')//遇到左括号设置注释为true
-                {
-                    annonation = true;
-                }
-                if (s == '>')//遇到右括号设置注释为false
-                {
-                    annonation = false;
-                    continue;
-                }
-                if (!annonation)//如果注释为false，则记录信息
-                {
-                    buffer[index] = s;
-                    index++;
-                }
-            }
-            if (index == 0)
-            {
-                return "";
-            }
-            else
-            {
-                string cut = new string(buffer);//转字符串输出
-                return cut;
-            }
-        }
-        private string EnCode(string info)//对邮件正文进行解码操作
-        {
-            try
-            {
-                string type = "";
-                string charset = "";
-                string encode = "";
-                int index = info.Length;
-                int abs = 1;
-                int one = 0;//记录第一个换行符
-                int two = 0;//记录第二个换行符
-                for (int i = 0; i < index; i++)
-                {
-                    if (info[i] == '\n')
-                    {
-                        if (abs == 1)
-                        {
-                            one = i;//记录第一个换行符的位置
-                            abs++;
-                            continue;
-                        }
-                        if (abs == 2)
-                        {
-                            two = i;//第二个换行符
-                            break;//直接结束循环
-                        }
-                    }
-                }
-                //获取邮件头部信息
-                string Content1 = info.Substring(0, one);
-                string Content2 = info.Substring(one + 1, two - one);
-                //获取正文，并删除前导，后导空格
-                string mainfo = info.Substring(two + 1);
-                mainfo = mainfo.Trim();
-                var types1 = Content1.Split(':', ';', '=');//以冒号,分号,等号分割为数组
-                var types2 = Content2.Split(':', ';', '=');
-                //提取有效信息
-                if (types1[0] == "Content-Type")
-                {
-                    type = types1[1];
-                    charset = types1[3];
-                    encode = types2[1];
-                }
-                if (types2[0] == "Content-Type")
-                {
-                    type = types2[1];
-                    charset = types2[3];
-                    encode = types1[1];
-                }
-                type = type.Trim();
-                charset = charset.Trim();
-                encode = encode.Trim();
-                if (Equals(type, "text/html") && Equals(encode, "quoted-printable") && Equals(charset, "GBK"))//中文GBK解码
-                {
-                    Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);//注册
-                    Encoding encoding = Encoding.GetEncoding(charset);//GBK编码
-                    mainfo = CutHtml(mainfo);
-                    var list = mainfo.Split('=');
-                    var buffer = GetBuffer(list);
-                    return encoding.GetString(buffer);
-                }
-                else if (Equals(type, "text/plain") && Equals(encode, "base64") && Equals(charset, "utf-8"))//中文，base64解码
-                {
-                    var buffer = Convert.FromBase64String(mainfo);
-                    return Encoding.UTF8.GetString(buffer);
-                }
-                else if (Equals(type, "text/plain") && Equals(encode, "quoted-printable") && Equals(charset, "us-ascii"))//英文，直接打印
-                {
-                    return mainfo;
-                }
-                else
-                {
-                    string b = "error con not analysis";
-                    return b;
-                }
-            }
-            catch
-            {
-                return info;
-            }
-        }
-
-        private void button3_Click(object sender, EventArgs e)//刷新收件箱
-        {
-            Send("IMAP", "INBOX", "");//发送刷新指令
-            //dataGridView1.SelectedRows.Clear();
-            label16.Text = "上次刷新事件:" + DateTime.Now.ToString("F");
-        }
     }
     public class Message
     {
@@ -912,6 +869,7 @@ namespace EmailClient
         public string to { get; set; }//收件人
         public string subject { get; set; }//主题
         public string cc { get; set; }//抄送
+        public string files { get; set; }
         public Message()
         {
 
@@ -924,6 +882,7 @@ namespace EmailClient
         public string pass;//授权码
         public string smtpServer;//smtp服务器
         public int port = 25;//端口号
+        public List<string> files = new List<string>();//文件列表
         public SmtpClient smtp;//发邮件
         public MailRecver recver;//接收邮件
         public MailSender(string email,string pass)
@@ -957,6 +916,20 @@ namespace EmailClient
             Path = Path.Substring(0, Path.Length - 24);//通过裁剪获得当前项目文件夹的地址
             Path += filename;
             sw = new StreamWriter(Path, true);//true表示追加模式
+        }
+        public void INFO(string info)//向文件写入信息，记录日志
+        {
+            time = DateTime.Now.ToString("G");
+            string msg = time + " [INFO] " + info;
+            sw.WriteLine(msg);
+            sw.Flush();
+        }
+        public void ERROR(string error)
+        {
+            time = DateTime.Now.ToString("G");
+            string msg = time + " [ERROR] " + error;
+            sw.WriteLine(msg);
+            sw.Flush();
         }
         public void write(string type, string info)//向文件写入信息，记录日志
         {

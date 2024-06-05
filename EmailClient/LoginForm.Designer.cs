@@ -38,7 +38,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(416, 427);
+            button1.Location = new Point(186, 415);
             button1.Name = "button1";
             button1.Size = new Size(150, 46);
             button1.TabIndex = 0;
@@ -52,7 +52,7 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(324, 38);
             textBox1.TabIndex = 1;
-            textBox1.Text = "";
+            textBox1.Text = "13569718997@163.com";
             // 
             // textBox2
             // 
@@ -61,7 +61,7 @@
             textBox2.PasswordChar = '*';
             textBox2.Size = new Size(324, 38);
             textBox2.TabIndex = 2;
-            textBox2.Text = "";
+            textBox2.Text = "NGIVHQLOCSGASMMO";
             // 
             // label1
             // 
@@ -83,13 +83,13 @@
             // 
             // button2
             // 
-            button2.Location = new Point(186, 427);
+            button2.Location = new Point(506, 415);
             button2.Name = "button2";
             button2.Size = new Size(150, 46);
             button2.TabIndex = 5;
-            button2.Text = "测试";
+            button2.Text = "退出";
             button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
+            button2.Click += button2_Click_1;
             // 
             // LoginForm
             // 

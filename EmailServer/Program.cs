@@ -57,6 +57,7 @@ namespace EmailServer
         private MimeMessage mime;
         private string email;
         private string pass;
+        private string path = "D:\\";
         private IMAP imap;
         private SMTP smtp;
         private TcpClient tcpClient;
@@ -69,7 +70,6 @@ namespace EmailServer
             Reader = new BinaryReader(tcpClient.GetStream());
             Writer = new BinaryWriter(tcpClient.GetStream());
             Task.Run(()=>RecvInfo());
-            //Task.Run(()=>HaveNewFile());
         }
         public async Task RecvInfo()//接收信息
         {
@@ -85,8 +85,9 @@ namespace EmailServer
                     }
                 }
             }
-            catch
+            catch(Exception ex)
             {
+                log.ERROR(ex.Message + "line: 91");
                 Reader.Close();
                 Reader.Dispose();
                 Writer.Close();
@@ -125,7 +126,7 @@ namespace EmailServer
             if (operation == "INBOX")//获取收件箱
             {
                 Console.WriteLine("客户端请求访问收件箱");
-                log.INFO("客户端请求访问收件箱");
+                log.INFO("客户端请求访问收件箱 - 地址:" + email);
                 Console.WriteLine("访问允许");
                 log.INFO("允许访问收件箱");
                 imap.Inbox.Clear();//先清空
@@ -146,7 +147,7 @@ namespace EmailServer
                 catch(Exception ex)
                 {
                     Console.WriteLine("发送失败");
-                    log.ERROR("向用户发送收件箱过程出错 - 原因:" +ex.Message);
+                    log.ERROR("向用户发送收件箱过程出错 - 原因:" +ex.Message + "line: 151");
                 }
             }
             if (operation == "DRAFT")//获取草稿箱
@@ -172,7 +173,68 @@ namespace EmailServer
                 catch(Exception ex)
                 {
                     Console.WriteLine("发送失败");
-                    log.ERROR("向用户发送草稿箱过程出错 - 原因:" + ex.Message);
+                    log.ERROR("向用户发送草稿箱过程出错 - 原因:" + ex.Message + "line: 177");
+                }
+            }
+            if (operation == "PATHR")//发送附件存储地址
+            {
+                path = maininfo;//设置文件存储位置
+                Console.WriteLine("接收到文件路径");
+                log.INFO($"接收到文件路径 - 地址:{path}");
+            }
+            if(operation == "CHECK")
+            {
+                bool temp = true;
+                int index = Convert.ToInt32(maininfo);
+                Console.WriteLine("用户请求查询附件信息，邮件编号:"+index);
+                log.INFO($"邮件编号{index}");
+                var message = imap.Inbox[index];//找到对应文件
+                foreach (var s in message.BodyParts)
+                {
+                    if (s is MimePart attachment && attachment.IsAttachment)//表示有附件
+                    {
+                        Send("HAFIL",maininfo);//表示有附件
+                        Console.WriteLine("找到附件");
+                        log.INFO("将邮件编号发回 - " + maininfo);
+                        log.INFO($"找到附件 - 名称:{attachment.FileName}");
+                        temp = false;
+                        break;
+                    }
+                }
+                if (temp)
+                {
+                    Send("NOFIL", "");
+                    log.INFO("没有找到任何附件");
+                }
+            }
+            if (operation == "FILES")//发送附件
+            {
+                bool temp = true;
+                int index = Convert.ToInt32(maininfo);
+                var message = imap.Inbox[index];//找到对应文件
+                foreach (var s in message.BodyParts)
+                {
+                    if(s is MimePart attachment &&  attachment.IsAttachment)//表示有附件
+                    {
+                        Console.WriteLine("准备保存附件");
+                        string filename = attachment.FileName;//文件名
+                        var truepath = Path.Combine(path, filename);//文件的绝对地址
+                        using(var stream = File.Create(truepath))//保存文件
+                        {
+                            attachment.Content.DecodeTo(stream);
+                        }
+                        Send("FISUC", truepath);
+                        Console.WriteLine("附件保存完毕");
+                        log.INFO("附件保存完毕 - 地址:"+truepath);
+                        temp = false;
+                        break;
+                    }
+                }
+                if(temp)
+                {
+                    Send("NOFIL", "");
+                    Console.WriteLine("没有找到任何附件");
+                    log.INFO("没有找到任何附件");
                 }
             }
         }
@@ -181,39 +243,49 @@ namespace EmailServer
             if(operation == "LOGIN")
             {
                 log.INFO("用户登录,准备进行身份验证");
-                //Console.WriteLine("SMTP服务器收到登录请求");
-                //Console.WriteLine("SMTP服务器请求允许，输入邮箱");
-                //Console.WriteLine("SMTP收到邮箱");
-                log.INFO("SMTP服务器收到登录请求 - 地址:" + email);
+                Console.WriteLine("收到登录请求");
+                Console.WriteLine("等待接收邮箱");
+                Console.WriteLine("收到邮箱");
+                log.INFO("SMTP服务器收到登录请求 - 地址:" + maininfo);
                 email = maininfo;
                 try
                 {
-                    Send("ACCEP", "accept");
-                    //Console.WriteLine("SMTP请求允许，输入密码");
-                    log.INFO("SMTP请求允许,准备接收密码");
+                    Send("ACCEP", "");
+                    Console.WriteLine("登录请求允许，请输入密码");
+                    log.INFO("登录请求允许,准备接收密码");
                 }
                 catch(Exception ex)
                 {
                     Console.WriteLine("无法与客户端建立连接");
-                    log.ERROR("与客户端连接失败 - 原因:" + ex.Message);
+                    log.ERROR("与客户端连接失败 - 原因:" + ex.Message + "line: 281");
                 }
             }
             else if(operation == "PASSW")
             {
                 pass = maininfo;
-                //Console.WriteLine("SMTP收到密码");
+                Console.WriteLine("收到密码");
                 try
                 {
+                    Console.WriteLine("正在验证密码");
                     smtp = new SMTP(email, pass);
                     imap = new IMAP(email,pass);
-                    await imap.InitAsync();//验证
-                    Send("ALLOW", "allow");
+                    bool vis = await imap.InitAsync();//验证
+                    if(vis)
+                    {
+                        Send("ALLOW", "allow");
+                        Console.WriteLine("验证通过,登录请求允许");
+                    }
+                    else
+                    {
+                        Send("REFUS", "refus");
+                        Console.WriteLine("请检查密码后重试");
+                    }
                 }
                 catch(Exception ex)
                 {
                     Send("REFUS", "refus");
                     Console.WriteLine("无法与客户端建立连接");
-                    log.ERROR("与客户端连接失败 - 原因:" + ex.Message);
+                    log.ERROR("与客户端连接失败 - 原因:" + ex.Message + "line: 300");
                 }
             }
             else if(operation == "CLOSE")//关闭
@@ -223,20 +295,16 @@ namespace EmailServer
             else if (operation == "EMAIL")//发送邮件
             {
                 message = new MailMessage();//创建一个新的邮件格式
-                Console.WriteLine("客户端发送邮件请求");
-                log.INFO("服务器收到客户端邮件发送请求,开始记录");
+                Console.WriteLine("收到客户端邮件发送请求");
+                log.INFO("服务器收到客户端邮件发送请求 - 地址 : " + email);
             }
             else if (operation == "SUBJE")//主题
             {
                 message.Subject = maininfo;
-                Console.WriteLine("成功接收邮件主题");
-                log.INFO("成功接收邮件主题:"+maininfo);
             }
             else if(operation == "FROMR")//发件人
             {
                 message.From = new MailAddress(maininfo);
-                Console.WriteLine("成功接收发件人");
-                log.INFO("成功接收发件人:"+maininfo);
             }
             else if(operation == "TORRR")//收件人
             {
@@ -244,38 +312,49 @@ namespace EmailServer
                 foreach(var s in list)
                 {
                     message.To.Add(new MailAddress(s));
-                    log.INFO("成功接收收件人:"+s);
                 }
-                //message.To.Add(new MailAddress(maininfo));
-                Console.WriteLine("成功接收收件人");
             }
             else if(operation == "BODYR")//正文
             {
                 message.Body = maininfo;
-                Console.WriteLine("成功接收正文");
-                log.INFO("成功接收邮件正文");
             }
             else if(operation == "CCRRR")//抄送,以字符串的形式传送
             {
                 if (maininfo == "") return;
                 string[] cc = maininfo.Split(';');
-                foreach(var s in cc)
+                foreach (var s in cc)
                 {
-                    message.CC.Add(s);
+                    if(s != "")
+                        message.CC.Add(s);
                 }
-                Console.WriteLine("成功接收抄送");
-                log.INFO("成功接收邮件抄送");
+            }
+            else if(operation == "FILES")//文件
+            {
+                if (maininfo == "") return;
+                string[] fi = maininfo.Split(";");
+                foreach (var s in fi)
+                {
+                    if(s != "")
+                    {
+                        Attachment m = new Attachment(s);
+                        message.Attachments.Add(m);
+                    }
+                }
             }
             else if(operation == "ENDRR")//表示一封邮件发送完毕
             {
                 //表示从客户端接收邮件完毕
-                Console.WriteLine("成功接收邮件");
-                log.INFO("邮件内容接收完毕");
+                Console.WriteLine("邮件接收完毕，正在尝试发送中");
+                log.INFO("邮件接收完毕");
                 bool s =  await smtp.SendMeialAsync(message);//向smtp服务器发送邮件
                 if (s)
+                {
                     Send("TRUER", "true");//告诉客户端邮件发送成功
+                }
                 else
+                {
                     Send("FALSE","");
+                }
             }
         }
         public void SendEmail(MimeMessage message)//向客户端发送邮件
@@ -295,25 +374,28 @@ namespace EmailServer
             Send("CCRRR", cc);//抄送
             Send("ENDRR", "");//表示一封邮件结束
         }
-        /*public void HaveNewFile()
-        {
-            Console.WriteLine("开始监听新邮件");
-            while(true)
-            {
-                if(imap.flag)//表示有新的邮件
-                {
-                    Console.WriteLine("已将新邮件发送到客户端");
-                    Send("NEWEM", "");//告知发送的是新邮件
-                    SendEmail(imap.Inbox[imap.Inbox.Count - 1]);//发送邮件
-                    imap.flag = false;
-                }
-            }
-        }*/
         public void Send(string operation,string info)//向客户端发送信息
         {
             string maininfo = operation + info;
             Writer.Write(maininfo);
             Writer.Flush();
+            log.INFO($"发送的数据:{maininfo}");
+        }
+        public void SendByte(byte[] buffer)//发送字节流
+        {
+            Writer.Write(buffer);
+        }
+        public void SendFile(FileStream stream,int bytesRead, byte[] buffer)//发送文件
+        {
+            while((bytesRead = stream.Read(buffer,0,buffer.Length)) > 0)
+            {
+                string heads = "FILES";
+                byte[] head = Encoding.Default.GetBytes(heads);//文件头
+                byte[] info = new byte[head.Length + buffer.Length];
+                head.CopyTo(info, 0);
+                buffer.CopyTo(info, head.Length - 1);
+                Writer.Write(info,0,bytesRead);
+            }
         }
         private byte[] GetBuffer(string[] buffer)//输入16进制字符串数组，转化为字节流
         //例如6E 69 68 61 6F，为GBK编码的你好，获得字节流之后将该字节流返回，使用Encoding对象的GetString方法即可获取字符串
@@ -482,10 +564,8 @@ namespace EmailServer
             client = new ImapClient();
             string suffix = GetMAilSuffix(name);
             imapserver = "imap." + suffix;
-            //Console.WriteLine("IMAP服务器收到登录请求");
-            //Console.WriteLine("IMAP请求允许");
         }
-        public async Task InitAsync()//尝试与IMAP服务器建立连接
+        public async Task<bool> InitAsync()//尝试与IMAP服务器建立连接
         {
             try
             {
@@ -498,33 +578,14 @@ namespace EmailServer
                     Version = "1.0.0"
                 };
                 var serverImplementation = client.Identify(clientImplementation);
-                //Console.WriteLine("IMAP服务器验证通过");
-                log.INFO("IMAP登入成功");
-                /*client.Inbox.CountChanged +=  (sender, e) =>//注册事件
-                //暂时没有用处找不到异常点在哪里，该事件无法被触发
-                {
-                    try
-                    {
-                        Console.WriteLine("Count发生变化");
-                        if (client.Inbox.Count > count)//当收件箱的邮件比链表中多的时候
-                        {
-                            Console.WriteLine("有新邮件到达");
-                            var newmessage = client.Inbox.GetMessage(client.Inbox.Count - 1);//获取最后一一封邮件
-                            Inbox.Add(newmessage);
-                            flag = true;//告诉服务器有新邮件送达
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"新邮件{ex.Message}");
-                    }
-                };*/
             }
             catch(Exception ex)
             {
-                //Console.WriteLine("身份验证失败，用户名或者密码有误");
-                log.ERROR("IMAP身份验证失败 - 原因:" +ex.Message);
+                Console.WriteLine("身份验证失败，用户名或者密码有误");
+                log.ERROR("IMAP身份验证失败 - 原因:" +ex.Message + "line: 629");
+                return false;
             }
+            return true;
         }
         public string GetMAilSuffix(string email)//获取邮箱后缀名
         {
@@ -552,7 +613,7 @@ namespace EmailServer
             catch(Exception ex)
             {
                 Console.WriteLine("访问失败");
-                log.ERROR("访问草稿箱失败 - 原因:" + ex.Message);
+                log.ERROR("访问收件箱失败 - 原因:" + ex.Message + "line: 639");
             }
         }
         public async Task GetDraftsAsync()//获取草稿箱
@@ -575,22 +636,13 @@ namespace EmailServer
             catch(Exception ex)
             {
                 Console.WriteLine("访问失败");
-                log.ERROR("访问草稿箱失败 - 原因:" + ex.Message);
+                log.ERROR("访问草稿箱失败 - 原因:" + ex.Message + "line: 622");
             }
         }
-
         public void AddDraftsAsync(MimeMessage message)//添加
         {
             Dratfs.Add(message);
         }
-        /*public async Task DelDraftsAsync(MimeMessage message)//删除
-        {
-            Dratfs.Remove(message);
-        }
-        public async Task ChangeDraftsAsync(MimeMessage maeesge)//修改
-        {
-
-        }*/
     }
     public class SMTP//与SMTP服务器通信
     {
@@ -615,7 +667,6 @@ namespace EmailServer
                 Credentials = new NetworkCredential(name, pass),
                 EnableSsl = true
             };
-            //Console.WriteLine("SMTP验证通过");
         }
         public string GetMAilSuffix(string email)//获取邮箱后缀名
         {
