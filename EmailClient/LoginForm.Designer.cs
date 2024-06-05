@@ -52,7 +52,6 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(324, 38);
             textBox1.TabIndex = 1;
-            textBox1.Text = "13569718997@163.com";
             // 
             // textBox2
             // 
@@ -61,7 +60,6 @@
             textBox2.PasswordChar = '*';
             textBox2.Size = new Size(324, 38);
             textBox2.TabIndex = 2;
-            textBox2.Text = "NGIVHQLOCSGASMMO";
             // 
             // label1
             // 

@@ -423,9 +423,9 @@
             label17.AutoSize = true;
             label17.Location = new Point(789, 24);
             label17.Name = "label17";
-            label17.Size = new Size(96, 31);
+            label17.Size = new Size(62, 31);
             label17.TabIndex = 12;
-            label17.Text = "label17";
+            label17.Text = "附件";
             // 
             // button4
             // 
@@ -676,9 +676,9 @@
             label8.Location = new Point(264, 86);
             label8.Margin = new Padding(4, 0, 4, 0);
             label8.Name = "label8";
-            label8.Size = new Size(102, 37);
+            label8.Size = new Size(145, 37);
             label8.TabIndex = 7;
-            label8.Text = "label8";
+            label8.Text = "邮箱地址";
             // 
             // console
             // 
